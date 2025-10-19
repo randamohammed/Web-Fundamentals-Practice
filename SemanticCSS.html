@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>عناصر HTML الدلالية - الجزء 2</title>
+    <style>
+        body{
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 30px;
+        background-color: darkgreen;/*All Page will be darkgreen*/
+        margin: 20px 0;
+        text-align: center;
+        padding: 10px;
+    }
+        h1,h2{
+            color: blue;
+        }
+
+        a{
+            margin: 20px ;
+           color: yellow;
+        }
+        /*posude cless*/
+        a:hover{
+            color: red;
+        }
+        a:first-line{
+            color: chartreuse;
+        }
+        footer
+        {
+           background-color: gray;
+           width: 100%;
+           height: 50%;
+        }
+        #fort{
+            font-size: 30px;
+            color: white;
+        }
+        form{
+            color: darkorange;
+            padding: 10px;
+            margin: 30px;
+        }
+        /*descnedenet elemenrt*/
+        section p{
+            color: aqua;
+        }
+        /*Attrubt Elemet*/
+      input[type="text"]{
+       
+        font-size:20px;
+        border: 1px solid #333;
+      }
+      /*ID element*/
+      #cnvn
+      {
+        color: white;
+      }
+      li:first-child
+    </style>
+</head>
+<body>
+    <header>
+        <h1>موقع الاقتباسات والمصادر</h1>
+        <nav>
+        <a href="#">اقتباسات</a>
+        <a href="#v">نموذج التسجيل</a>
+        </nav>
+    </header>
+
+    <main>  
+        <section>
+            <h2>اقتباسات ملهمة</h2>
+            <article>
+                <h3>أوسكار وايلد</h3>
+                <blockquote cite="https://www.goodreads.com/quotes/7282">
+                   <p>“Be yourself; everyone else is already taken.”</p>
+                </blockquote>
+                <p>— <cite>Oscar Wilde</cite></p>
+            </article>
+            <section class="form">
+                <h3>نموذج التسجيل في النشرة البريدية</h3>
+                 <form action="RRRR">
+                    <label for="name">name</label>
+                    <input type="text" id = "name" name="name" placeholder="اكتب اسمك">
+                    <label for="email">email</label>
+                    <input type="email" id ="email" name="email" placeholder="example@email.com">
+                <button type="submit">Send</button>
+                </form>
+            </section>
+            <footer>
+                 <p id ="cnvn">جميع الحقوق محفوظة &copy; 2025</p>
+            </footer>
+        </section>
+    </main>
+</body>
+</html>
