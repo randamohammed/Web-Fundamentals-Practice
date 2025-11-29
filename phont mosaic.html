@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grid Masonry Mosaic</title>
+    <style>
+        *{padding: 0;margin: 0;box-sizing: border-box;}
+        body{padding: 2rem;font-family: Arial, Helvetica, sans-serif;}
+        .Mosaic{
+            display: grid;
+            grid-template-columns: repeat(auto-fill,minmax(150px,1fr));
+            gap: 0.5rem;
+            grid-auto-rows: 150px;
+            grid-auto-flow: dense;
+        }
+        .Mosaic img{
+            width: 100%;
+            height: 100%;
+            display: block;
+            object-fit: cover;
+        }
+         .span-2x{
+            grid-row: span 2;
+            grid-column: span  2;
+            
+         }
+    </style>
+</head>
+<body>
+    <div class="Mosaic">
+         <img src="Images/A11.jpg" class="span-2x" alt="" >
+         <img src="Images/A2.jpg" alt="">
+         <img src="Images/A5.jpg" alt="">
+         <img src="Images/A3.jpg"  alt="">
+         <img src="Images/A6.jpg" alt="">
+         <img src="Images/A7.jpg" alt="">
+         <img src="Images/A9.jpg" class="span-2x" alt="">
+         <img src="Images/A10.jpg"  alt="">
+         <img src="Images/A2.jpg" alt="">
+         <img src="Images/A1.jpg" alt="">
+       </div>
+
+
+</body>
+</html>

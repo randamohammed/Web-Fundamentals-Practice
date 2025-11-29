@@ -3,107 +3,298 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Responsive CV – HTML & CSS </title>
 
     <style>
+        :root{
+          --bg:         #f7f7fb;
+          --card:       #ffffff;
+          --text:       #1f2937;
+          --muted:      #556072;
+          --accent:     #4f46e5;
+          --accent-2:   #22c55e;
+          --line:       #e5e7eb;
+          --radius:    16px;                 
+          --shadow:    0 10px 30px rgba(0,0,0,.08);
+
+          --space-1: 6px;
+          --space-2:   10px;
+          --space-3:   14px;
+          --space-4:   20px;
+          --space-5:   28px;
+          --space-6:   40px;
+
+          --maxw: 1100px;
+        }
+
+       :root[data-theme="dark"] {
+      --bg:       #0b1220;
+      --card:     #0f172a;
+      --text:     #e5e7eb;
+      --muted:    #9ca3af;
+      --accent:   #8b93f9;
+      --accent-2: #34d399;
+      --line:     #1f2a44;
+      --shadow:   none;                      /* Reduce glow on dark surfaces */
+    }
+
+    /* ── System Dark (only if user hasn’t manually chosen) ─────────── */
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme]) {
+        --bg:       #0b1220;
+        --card:     #0f172a;
+        --text:     #e5e7eb;
+        --muted:    #9ca3af;
+        --accent:   #8b93f9;
+        --accent-2: #34d399;
+        --line:     #1f2a44;
+        --shadow:   none;
+      }
+    }
+        *, *::after ,*::before{box-sizing: border-box;}
         body{
-            font-family: Arial, Helvetica, sans-serif;
-            font-size: 16px;
-             color: rgb(63, 59, 59);
-             margin: auto;
-             background-color: grey;
-             justify-items: center;
-             line-height: 1.4;
+         margin: 0;
+      font: 16px/1.6 system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color: var(--text);
+      /* Soft background decoration + solid token color */
+      background:
+        radial-gradient(1200px 600px at 20% -10%, rgba(79,70,229,.10), transparent 60%),
+        radial-gradient(900px 500px  at 120% 10%, rgba(34,197,94,.08), transparent 60%),
+        var(--bg);
         }
-        .Min{
-            width: 80%;
-            color: rgb(63, 59, 59);
-            background-color: antiquewhite;
-            border-radius: 15px;
-            margin-top: 40px;
-            margin-bottom: 40px;
-            padding: 20;
-            margin: 40px auto ;
-        }
-  
+        img{max-width: 100%;display: block;}
+        a{color: var(--accent);text-decoration: none;}
+        a:hover{text-decoration: underline;}
+        .muted{color: var(--muted);}
 
-        .My-informaiton{      
-  
-              height: 10vw;
-              background-color: rgba(25, 3, 85, 0.986);
-              padding: 10px; 
-              margin-top: 30px; 
-              margin: 20px auto;
-              display: flex;
-
-            }
-            .My-countac-detalse{
-                margin: 10px;
-                padding: 8px;
-            }
-        .images{
-            width: 100px;
-            height: 100px;
-            border-radius: 75px;
+        .tag{
+          display: inline-block;
+          padding: 2px 10px;
+          border: 1px solid  var(--line);
+          border-radius: 999px;
+          font-size: 12px;
         }
-        .My-tatnacal{
-         
-          width: 96% ;
-          display: flex;
-          padding:  1rem;
-          margin: 1px;
+        .wrapper{max-width: var(--maxw);margin: 40px auto;padding: 0 var(--space-4);}
+        .card{
+          background: var(--card);
+          border: 1px solid  var(--line);
+          border-radius: var(--radius);
+          box-shadow: var(--shadow);
+          overflow: hidden;
         }
-        .skills{
-          width:35%;
-        }
-        .Sammmray{
-          width: 75%;
-        }
-        .Sammmray section{
-           
-            border-radius: 15px;
-            border: 1px solid gray;
-            background-color: aliceblues;
-            margin: 20px;
-            padding: 20px;
-        }
-        .skills section{
-           
-            border-radius: 15px;
-            border: 1px solid gray;
-            background-color: aliceblues;
-            margin: 20px;
-            padding: 20px;
-        }
-        .Technical-Skills{
-          padding: 1px;
-          
-        }
-        span{
-          color:rgb(187, 183, 183);
-        }
-        .Certifications{line-height: 1.4;font-size: 16px;}
     
+        .header{
+          position: relative;
+          display: grid;
+          grid-template-columns: 120px 1fr;
+          gap: var(--space-4);
+          padding: var(--space-5);
+          align-items: center;
+          background: linear-gradient(135deg,rgba(79,70,229,.08), transparent 50%), var(--card);
+          border-bottom: 1px solid var(--line);
+        }
+    
+        .avatar{
+          width: 120px;
+          height: 120px;
+          border-radius: 50%;
+          overflow: hidden;
+          border: 3px solid rgba(79, 70, 229, .2);
+        }
+        .avatar img{
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          object-position: center;
+        }
+
+        .title-block h1{margin: 0;font-size: clamp(28px,2vw,40px);line-height: 1.2;}
+        .title-block p {margin: 6px 0  0 ;font-size: 18px;}
+
+        .chips{display: flex;flex-wrap: wrap;gap: 8px;}
+
+        .contact{
+          display: flex;
+          flex-wrap: wrap;
+          gap: 12px 18px;
+          margin-top: var(--space-3);
+          font-size: 14px;
+        }
+
+        .contact a,.contact span{display: inline-flex;align-items: center;gap: 8px;}
+        .icon{width: 18px;height: 18px;flex: none;}
+       
+        .theme-toggle:hover{box-shadow: 0 2px 10px rgba(0,0,0,.06);}
+        .theme-toggle svg{width: 18px;height: 18px;}
+        
+        .theme-toggle{
+          position: absolute;top: 14px; right: 14px;
+          display: inline-flex;align-items: center;gap: 8px;
+          padding: 6px 12px;
+          border-radius: 999px;
+          border: 1px solid  var(--line);
+          background: var(--card);
+          color: var(--text);
+          cursor: pointer;
+          font-size: 14px;
+        }
+
+        .grid{
+          display: grid;
+          grid-template-columns: 320px 1fr;
+          gap: var(--space-5);
+          padding: var(--space-5);
+        }
+        .section{margin-bottom: var(--space-5);}
+        .section h2{
+          display: inline-flex;align-items: center;gap: 10px;
+          margin:  0 0 var(--space-3);
+          font-size: 22px;
+          border-bottom:2px solid var(--line) ;
+          padding-bottom:10px ;
+        }
+        @media(max-width:860px)
+        {
+          .header{grid-template-columns: 1fr;text-align: center;}
+          .avatar {justify-self: center;}
+          .grid   {grid-template-columns: 1fr;}
+          .theme-toggle{position: static;justify-self: center;margin-bottom: 10px;}
+        }
+         .side .block{
+          background: var(--card);
+          border: 1px solid var(--line);
+          border-radius: var(--radius);
+          padding: var(--space-4);
+          margin-bottom: var(--space-4);
+         }
+         .block h3{
+            margin: 0 0 var(--space-3);
+            font-size: 16px;
+            letter-spacing: .3px;
+            text-transform:uppercase;
+            color: var(--muted);
+         }
+
+       .skill  {
+         display: grid;
+         grid-template-columns: 1fr auto;
+         align-items: center;
+         gap: 14px;
+         margin: 12px 0;
+       }
+       .meter{
+        position: relative;
+        height: 8px;
+        background: #22c55e;
+        overflow: hidden;
+       }
+
+       .meter > span{
+        display: block;
+        height: 100%;
+        width: var(--v,60%);
+        background: linear-gradient(90deg, var(--accent), var(--accent-2));
+       }
+
+       .item{padding: 14px 0;border-bottom: 1px dashed var(--line);}
+    
+       .item:last-child{border-bottom: 0;}
+
+       .item .top {
+        display: flex;flex-wrap: wrap;gap: 10px 16px;color: var(--muted);
+       }
+        .item .role{font-weight: 700;}
+        .item .place { color: var(--muted); }
+        .item .when  { margin-left: auto; font-size: 14px; color: var(--muted); }
+
+        @media (max-width:640px)
+        {
+          .item .when {margin-left: 0;width: 100%;}
+        }
+        ul.clean {margin: 10px 0 0 18px;}
+        @media print{
+          body {background: #fff;}
+          .wrapper {margin: 0}
+          .card {box-shadow: none;border: 0;}
+          .header,.grid{padding: 16px;}
+          a{color: #000;text-decoration: none;}
+          .section,.item,.block{break-inside: avoid;}
+          .theme-toggle{display: none !important}
+        }
     </style>
 </head>
 <body>
-  <main> 
-    
-        <header class="My-informaiton">
-           <img class="images" src="MyProfailImage.png" alt="randa image protal"> 
+  <main class="wrapper"> 
+    <article class="card" aria-labelledby="cv-title">
+        <header class="header">
 
-           <div class="My-countac-detalse">
-               <h1>Randa Mohammed</h1>
-             <p>Jop Title • Specialization • 3-6 words that describe your focus</p>
+          <button 
+          id="themeToggle"
+          class="theme-toggle"
+          type="button"
+          aria-pressed="false"
+          aria-label="Toggle dark or light theme">
+          <svg viewBox = "0 0 24 24" aria-hidden="true">
+             <path fill = "currentColor"
+             d="M12 4a1 1 0 0 1 1 1V7a1 1 0 0 1-2 0V5a1 1 0 0 1 1-1Zm0 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm8-5a1 1 0 0 1 1 1h2a1 1 0 0 1 0 2h-2a1 1 0 0 1-1-1 1 1 0 0 1 1-1ZM3 12a1 1 0 0 1-1 1H0a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1Zm15.66 6.66a1 1 0 0 1 1.41 0l1.42 1.42a1 1 0 0 1-1.42 1.41l-1.41-1.41a1 1 0 0 1 0-1.42ZM4.93 4.93a1 1 0 0 1 1.41 0L7.76 6.34A1 1 0 0 1 6.34 7.76L4.93 6.34a1 1 0 0 1 0-1.41Zm0 14.14a1 1 0 0 1 1.41 0l1.41 1.41A1 1 0 0 1 6.34 22.9l-1.41-1.41a1 1 0 0 1 0-1.41ZM19.07 4.93a1 1 0 0 1 1.41 0 1 1 0 0 1 0 1.41l-1.41 1.41A1 1 0 0 1 17.66 6.34l1.41-1.41Z" />
+          </svg>
+             <span>Toggle Theme</span>
+          </button>
+
+          <div class="avatar" role="img" aria-label="Profile photo">
+             <img src="MyProfailImage.png" alt="randa image protal" loading="lazy"/> 
+          </div>
+         
+
+          <div class="title-block">
+               <h1 id="cv-title">Randa Mohammed</h1>
+             <p class="muted">Jop Title • Specialization • Full stack  Developer</p>
+      
+             <div class="contact" aria-label="contact information">
+              <a href="mailto:randamuhammad79@gmail.com" aria-label="Email">
+                <svg class="icon" viewBox = "0 0 24 24" aria-hidden="true">
+                  <path fill = "currentColor" d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2Zm0 4-8 5L4 8V6l8 5 8-5Z"></path>
+                </svg>
+                randamuhammad79@gmail.com
+              </a>
+
+              <span aria-label="Phone">
+                 <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+                 <path fill="currentColor" d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.24 11.7 11.7 0 0 0 3.7.6 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 8a1 1 0 0 1 1-1h3.4a1 1 0 0 1 1 1 11.7 11.7 0 0 0 .6 3.7 1 1 0 0 1-.24 1Z"/>
+                 </svg>
+                 +20 11 25 2331
+              </span>
+
+               <span aria-label="Location">
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+                <path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 0 0-7-7Zm0 9.5a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5Z"/>
+              </svg>
+              Cair,Egypt
+            </span>
+
+            <a href="www.linkedin.com/in/randa-mohammed-sharif" target="_blank" rel="noopener" aria-label="LinkedIn">
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+                <path fill="currentColor" d="M4.98 3.5C4.98 4.88 3.86 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM.5 8h4V23h-4V8zm7 0h3.8v2.05h.05c.53-1 1.83-2.05 3.76-2.05 4.02 0 4.77 2.64 4.77 6.08V23h-4v-6.67c0-1.59-.03-3.63-2.21-3.63-2.21 0-2.55 1.73-2.55 3.52V23h-4V8z"/>
+              </svg>
+              linkedin.com/in/your-profile
+            </a>
+
+            <a href="https://github.com/randamohammed" target="_blank" rel="noopener" aria-label="GitHub">
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+                <path fill="currentColor" d="M12 .5a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2c-3.3.7-4-1.6-4-1.6-.6-1.4-1.4-1.8-1.4-1.8-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1.1 1.8 2.9 1.3 3.6 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.9 0-1.3.5-2.4 1.2-3.3-.1-.3-.5-1.6.1-3.3 0 0 1-.3 3.4 1.2a11.6 11.6 0 0 1 6.2 0c2.4-1.5 3.4-1.2 3.4-1.2.6 1.7.2 3 .1 3.3.8.9 1.2 2 1.2 3.3 0 4.6-2.7 5.6-5.3 5.9.4.4.7 1 .7 2v2.9c0 .3.2.7.8.6A12 12 0 0 0 12 .5Z"/>
+              </svg>
+              github.com/randamohammed
+            </a>
+
+             </div>
         </header>
- <article>
-    <div class="Min">
-    <div class="My-tatnacal"> 
+ 
+    <div class="grid">
 
-      <aside  class="skills">
+      <aside  class="side" aria-label="sidebar">
 
-        <section class ="My-profile">
-            <h2>Profile</h2>
+        <section  class ="block" aria-labelledby="profile-title">
+            <h3 id="profile-title">Profile</h3>
           <p>Detail-oriented Software Developer with hands-on experience in designing, building, and deploying
             full-scale desktop applications using C# .NET and SQL. Proven ability to write clean, object-oriented
             code and a passion for solving complex problems. Seeking an opportunity to contribute to a
@@ -111,113 +302,217 @@
            </p>
         </section>
 
-        <section class="Technical-Skills">
-          <h2>Technical Skills</h2>
-          <ul>
-            <li>Programming Languages: C#, C++, SQL, T-SQL</li>
-            <li>Desktop Technologies: .NET Framework, Windows Forms, ADO.NET</li>
-            <li>Web Technologies: HTML, CSS (In Progress)</li>
-            <li>Databases: Relational Databases (SQL Server)</li>
-            <li>Key Concepts: Object-Oriented Programming (OOP), Algorithms & Problem-Solving, Data Structures, Clean Code</li>
-          </ul>
-           
-        </section>
-
-        <section class="Tools-Tech">
-           <h2>Tools & Tech</h2>
-           <span class="Git">Git</span>
-           <span class="Git">GitHub</span>
-           <span class="Git">Vs.</span>
-           <span class="Git">Chrome DevTools</span>
-        </section>
-
-        <section class="Languages">
-          <h2>Languages</h2>
-          <p>Arabic (Native), English (Professional)</p>
-        </section>
-
-    </aside>
-
-        
-        
-    <div class="Sammmray">   
-
-      <section class="Experience">
-                    <h2>Experience</h2>
-                    <hr>
-                    <pre>Developer END Tech • Egypt      <span>2023 — Present</span></pre>
-
-                    <p>Managed the full software development lifecycle for solo and team projects, from planning and
-                    .design to development, debugging, and deployment
-                    Applied Object-Oriented Programming (OOP) principles and best practices to write clean,
-                    .#maintainable, and scalable code in C#
-                    Developed and documented two significant desktop applications (a comprehensive DVLD
-                       .system and a commercial invoicing system)
-                      Actively pursuing a structured learning path to master advanced software engineering concept.and expand into web development</p>
-      </section>
-
-      <section  class="Selected Projects">
-         <h2>Selected Projects</h2>
-         <hr>
-         <pre><h3>FatoraX – Sales & Inventory System (Team Project) 
-         </h3>For small company 2024</pre>
-        <ul class="list-Sammmray-of-Projact"> 
-         <ul>       
-          <li>Led the development of the core invoicing module, including creating new invoices,adding invoice details, and filtering capabilities</li>
-          <li>Designed and implemented the user interface 
-            and backend logic for the sales
-             reporting feature, allowing users 
-             to filter reports by date</li>
-          <li>Contributed to the development of the customer
-             management module, including
-           adding and viewing client data</li>
-          <hr class="Tactical">
-          <li>Technologies Used: C#, .NET Framework, Windows Forms, SQL Server</li>
-         </ul> 
+        <section class="block" aria-labelledby="skills-title">
+          <h3 id="skills-title">Technical Skills</h3>
           
-         <li><a href="youtube.com/watch?v=nMAZWPjFUik&t=28s">Link : youtube.com/For FatoraX</a></li>
-        </ul> 
+          <div class="skill">
+            <span>Programming Languages: C#, C++, SQL, T-SQL</span>
+            <div class="meter" aria-hidden="true"><span style="--v: 85%"></span></div>    
+          </div>
+
+           <div class="skill">
+            <span>Desktop Technologies: .NET Framework, Windows Forms, ADO.NET</span>
+            <div class="meter" aria-hidden="true"><span style="--v: 85%"></span></div>    
+          </div>
+
+          <div class="skill">
+            <span>Databases: Relational Databases (SQL Server)</span>
+            <div class="meter" aria-hidden="true"><span style="--v: 90%"></span></div>    
+          </div>
+
+          <div class="skill">
+            <span>Web Technologies: HTML, CSS (In Progress)</span>
+            <div class="meter" aria-hidden="true"><span style="--v: 70%"></span></div>    
+          </div>
+
+          <div class="skill">
+            <span>Key Concepts: Object-Oriented Programming (OOP), Algorithms & Problem-Solving, Data Structures, Clean Code</span>
+            <div class="meter" aria-hidden="true"><span style="--v: 75%"></span></div>    
+          </div>
+        </section>
+
+        <section class="block" aria-labelledby="tools-title">
+           <h3 id="tools-title">Tools & Tech</h3>
+           <div class="chips" role="list" aria-label="Tools and technologies">
+             <span class="tag" role="listitem">Git</span>
+             <span class="tag" role="listitem">GitHub</span>
+             <span class="tag" role="listitem">Vs <code></code></span>
+             <span class="tag" role="listitem">Chrome DevTools</span>
+           </div>
+        </section>
+
+        <section class="block" aria-labelledby="languages-title">
+          <h3 id="languages-title">Languages</h3>
+          <p>Arabic (Native), English (in progress)</p>
+        </section>
+
+        <section class="block" aria-labelledby="interests-title">
+          <h3 id="interests-title">interests</h3>
+          <p>Open-source, Web Performance, UI Design, Teaching,Career improvement</p>
+        </section>
+    </aside>
+     
+    <div class="main" aria-label="Main content">   
+
+      <section class="section" aria-labelledby="experience-title">
+         <h2 class="experience-title">Experience</h2>
+          <!-- 💻 Experience Section -->
+          <div class="item">
+            <div class="top">
+              <div class="role">Backend Developer</div>
+              <div class="place">(Self-directed) | Independent Projects</div>
+              <div class="when">2023 – Present</div>
+            </div>
+            <ul class="clean">
+              <li>Managed the full software development lifecycle (SDLC) for solo projects, from initial planning and detailed design to implementation, functional testing, and deployment.</li>
+              <li>Applied Object-Oriented Programming (OOP) principles and best practices to write clean, maintainable, and scalable code using C#.NET.</li>
+              <li>Utilized SQL and T-SQL for database management, developing complete systems that integrate with SQL Server.</li>
+              <li>Designed and implemented automated Windows Services, such as a service for file monitoring and scheduled database backups to ensure data safety and reliability (File Monitoring & Database Backup Service).</li>
+              <li>Developed comprehensive desktop applications, including a Driver & Vehicle Licensing Department (DVLD) System and a commercial billing/POS system (FatoraX), using C#, .NET Framework, and Windows Forms.</li>
+            </ul>
+          </div>
+
+<!-- 💻 Frontend Experience Section -->
+          <div class="item">
+            <div class="top">
+              <div class="role">Frontend Developer</div>
+              <div class="place">(Self-directed) | Independent Projects</div>
+              <div class="when">2025 – Present</div>
+            </div>
+            <ul class="clean">
+              <li>Designed and implemented responsive and user-friendly web interfaces using HTML5, CSS3.</li>
+              <li>Applied CSS Grid and Flexbox layouts to create flexible and adaptive designs across devices.</li>
+              <li>Integrated APIs and backend services to fetch and display dynamic content on web pages.</li>
+              <li>Utilized version control (Git) for project tracking, collaboration, and deployment.</li>
+            </ul>
+          </div>
+
+                   
       </section>
 
-      <section class="Education">
-        <h2>Education</h2>
-        <hr>
-        <pre>Diploma in Software Development   <span>Sultan Ali Dinar School</span> <span>2017 — 2022</span></pre>
-        
-        <p >Self-Learning in Backend Software Development Learning path guided by online courses Completed courses
-         include C#, Object-Oriented Programming (OOP), Databases, Three-Layer Architecture, and several hands-on
-         practical projects and courses .</p>
+      <section  class="section" aria-labelledby="projects-title">
+         <h2>Selected Projects</h2>
+
+         <!-- 💻 FatoraX – Sales & Inventory System -->
+         <div class="item">
+           <div class="top">
+             <div class="role">FatoraX – Sales & Inventory System (Team Project)</div>
+             <div class="place">(Collaborative Project)</div>
+             <div class="when">5/2025</div>
+           </div>
+           <ul class="clean">
+             <li>Comprehensive desktop application for managing billing and point-of-sale operations, developed collaboratively to support small businesses.</li>
+             <li>Built with C#, .NET Framework, Windows Forms, and SQL Server.</li>
+             <li><a href="https://youtube.com/watch?v=nMAZWPjFUik&t=28s">Link: YouTube Demo</a></li>
+           </ul>
+         </div>
+         
+         <!-- 💻 Driver & Vehicle Licensing Department (DVLD) System -->
+         <div class="item">
+           <div class="top">
+             <div class="role">Driver & Vehicle Licensing Department (DVLD) System (Solo Project)</div>
+             <div class="place">(Self-directed)</div>
+             <div class="when">3/2025</div>
+           </div>
+           <ul class="clean">
+             <li>Comprehensive solo-developed desktop application to manage the entire lifecycle of the driver licensing process.</li>
+             <li>Developed using C#, .NET Framework, Windows Forms, and SQL Server.</li>
+           </ul>
+         </div>
+         
+         <!-- 💻 Karata Clumb -->
+         <div class="item">
+           <div class="top">
+             <div class="role">Karata Clumb – Desktop Management System</div>
+             <div class="place">(Solo Project)</div>
+             <div class="when">2025</div>
+           </div>
+           <ul class="clean">
+             <li>Developed using C# and SQL Server to handle member data, payments, and club operations efficiently.</li>
+             <li>Focused on database connectivity and clean UI design.</li>
+           </ul>
+         </div>
+
       </section>
 
-      <section class="Certifications">
-        <h2>Certifications</h2>
-        <hr>
-        <h2>Key Training & Courses</h2>
-        <p>Software Development Roadmap – Programming Advices <span>(In Progress) </span> Completed Modules</p>
-        <ul>
-          <li>C++ (Foundations, OOP, Advanced)</li>
-          <li>C# (Foundations, OOP, Advanced)</li>
-          <li>Algorithms & Problem-Solving (Levels 1-5)</li>
-          <li>Data Structures (Levels 1-2)</li>
-          <li>SQL & T-SQL for Database Management</li>
-          <li>Full C# Desktop Projects</li>
-        </ul>
-        <p>Web Development Fundamentals  <span>(Self-paced)</span></p>
-        <p>Completed Modules:</p>
-        <ul>
-          <li>HTML - Deep Dive</li>
-        </ul>
-        <p>Currently Studying:</p>
-        <ul>
-          <li>CSS Foundations - Deep Dive</li>
-        </ul>
+      <section class="section" aria-labelledby="education-title">
+        <h2 id="education-title">Education</h2>
+         <div class="item">
+              <div class="top">
+                <div class="role">Self-Learning in Backend Software Development</div>
+                <div class="place">Learing online</div>
+                <div class="when">2023 — Present</div>
+              </div>
+              <ul class="clean">
+                <li>Self-Learning in Backend Software Development Learning path guided by online courses Completed courses.</li>
+                <li>include C#, Object-Oriented Programming (OOP), Databases, Three-Layer Architecture, and several hands-on practical projects and courses .</li>
+              </ul>
+            </div>
       </section>
 
-      </div>
+      <section class="section" aria-labelledby="certs-title">
+        <h2 id="certs-title">Certifications & Courses</h2>
+      
+        <div class="item">
+          <div class="top">
+            <div class="role">Responsive Web Design</div>
+            <div class="place">freeCodeCamp</div>
+            <div class="when">2023</div>
+          </div>
+        </div>
+      
+        <div class="item">
+          <div class="top">
+            <div class="role">C++ (Foundations, OOP, Advanced)</div>
+            <div class="place">Software Development Roadmap</div>
+            <div class="when">2023</div>
+          </div>
+        </div>
+      
+        <div class="item">
+          <div class="top">
+            <div class="role">C# (Foundations, OOP, Advanced)</div>
+            <div class="place">Software Development Roadmap</div>
+            <div class="when">2023</div>
+          </div>
+        </div>
+      
+      </section>
+      
+    </div>
     </div>    
-    
     </div>
    </article>
-     </main>
+  </main>
+
+  <script>
+    (function() {
+      const STORAGE_KEY = 'theme';    
+      const root = document.documentElement;
+      const btn = document.getElementById('themeToggle');
+
+      const saved =  localStorage.getItem(STORAGE_KEY);
+
+      if(saved === 'light' || saved ===   'dark'){
+        root.setAttribute('data-theme',saved);
+
+      }
+
+       function applyTheme(theme) {
+        root.setAttribute('data-theme', theme);
+        localStorage.setItem(STORAGE_KEY, theme);
+        btn.setAttribute('aria-pressed', String(theme === 'dark'));        // reflect state
+        btn.querySelector('span').textContent = theme === 'dark'
+          ? 'Light Mode' : 'Dark Mode';                                    // user-friendly label
+      }
+  applyTheme(root.getAttribute('data-theme') || 'light');
+
+      // Click handler flips theme
+      btn.addEventListener('click', () => {
+        const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+        applyTheme(next);
+      });
+    })();
+  </script>
 </body>
 </html>
