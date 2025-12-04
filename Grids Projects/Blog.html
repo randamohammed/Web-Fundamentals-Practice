@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Blog</title>
+    <style>
+        *{padding: 0;margin: 0;box-sizing: border-box;}
+        body{font-family: Arial, Helvetica, sans-serif;padding: 2rem;}
+        .Blog{
+            display: grid;
+            gap: 1rem;
+            grid-template-areas: 
+            "header header header"
+            "post1 post2 post3"
+            "post4 post5 post6";
+            grid-template-columns: repeat(3,1fr);
+        }
+        h1{text-align: center;margin-bottom: 1rem;}
+        .header{grid-area: header;background: #4a90e2;padding: 1rem;color: #fff;}
+        .post{grid-area: post;background: #ddd;padding: 1rem;border: 1px solid #eee;}
+
+        @media(max-width:750px){
+            .Blog{
+                grid-template-columns: 1fr;
+                grid-template-areas: "header"
+                "post1"
+                "post2"
+                "post3"
+                "post4"
+                "post5"
+                "post6";
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>My Blog</h1>
+   <div class="Blog">
+    <header class="header">
+        <h2>Featured Article</h2>
+        <p>This is the standout post that spans all columns.</p>
+    </header>
+
+    <article>
+      <div class="post post1">
+        <h3>Post 1</h3>
+        <p>Summary of post one.</p>
+      </div>
+    </article>
+    <article>
+      <div class="post post2">
+        <h3>Post 2</h3>
+        <p>Summary of post two.</p>
+      </div>
+    </article>
+    <article>
+      <div class="post post3">
+        <h3>Post 3</h3>
+        <p>Summary of post three.</p>
+      </div>
+    </article>
+    <article>
+      <div class="post post4">
+        <h3>Post 4</h3>
+        <p>Summary of post four.</p>
+      </div>
+    </article>
+    <article>
+      <div class="post post5">
+        <h3>Post 5</h3>
+        <p>Summary of post five.</p>
+      </div>
+    </article>
+    <article>
+      <div class="post post6">
+        <h3>Post 6</h3>
+        <p>Summary of post six.</p>
+      </div>
+    </article>
+   </div>
+</body>
+</html>
