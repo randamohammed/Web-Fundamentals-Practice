@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Showcase CV – Cover Sidebar (CSS-only)</title>
+
+    <style>
+
+   :root {
+      --bg: #f8fafc;            
+      --ink: #0f172a;           
+      --muted: #64748b;         
+      --card: #ffffff;          
+      --line: #e2e8f0;          
+      --accent-a: #6366f1;      
+      --accent-b: #22c55e;      
+      --shadow: 0 10px 30px rgba(2,6,23,0.08);
+      --radius: 16px;
+
+      --space-1: 6px; --space-2: 10px; --space-3: 14px;
+      --space-4: 20px; --space-5: 28px; --space-6: 40px;
+
+      --sidebar-w: 320px;       
+      --maxw: 1200px;          
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0b1220;
+        --ink: #e5e7eb;
+        --muted: #9aa3b2;
+        --card: #0f172a;
+        --line: #1f2a44;
+        --shadow: none;
+      }
+    }
+
+    *,*::before,*::after{box-sizing: border-box;}
+    html{scroll-behavior: smooth;}
+    body{margin: 0;font: 16px/1.6 system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; color:var(--ink); background:var(--bg); }
+    img{max-width: 100;display: block;}
+    a{text-decoration: none;color: varr --accent-a;}
+    a:hover{text-decoration: underline;}
+   
+    .wrap{
+      max-width: var(--maxw);
+      display: grid;
+      grid-template-columns: var(--sidebar-w) 1fr;
+      margin: 0 auto;
+      min-height: 100svh;
+    }
+
+    @media (max-width: 960px){.wrap{grid-template-columns: 1fr;}}
+
+    .cover{
+        position: sticky;top: 0;align-self: start;min-height: 100svh;
+        background: linear-gradient(to bottom, rgba(15,23,42,0.60) ,rgba(15,23,42,0.35)),
+        url('Images/MyImage.png')  center/cover no-repeat;
+
+        display: grid;grid-template-rows: auto 1fr auto;gap: var(--space-5);
+        padding: var(--space-5);
+    }
+
+    @media (max-width: 960px){.cover{min-height: 60svh;border-bottom: 1px solid var(--line);}}
+    
+    .hero-inner{
+        display: grid;
+        grid-template-columns: 88px 1fr;gap: var(--space-3);align-items: center;
+    }
+    .avatar {
+        width: 88px;
+        height: 88px;
+        border-radius: 50%;
+        overflow: hidden;
+        position: relative;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+      }
+      .avatar img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+        border-radius: 50%;
+      }
+      .title h1 {
+        margin: 0;
+        font-size: clamp(22px, 4vw, 28px);
+        line-height: 1.1;
+      }
+      .title p {
+        margin: .25rem 0 0;
+        font-size: 18px;
+        opacity: .95;
+
+      }
+      .nav{
+        display: grid;gap: 8px;
+      }
+      .nav a{
+        display: flex;
+        text-decoration: none;align-items: center;
+        color: #ecfeff;
+        padding: 10px 12px;border-radius: 12px;
+        background: rgba(255,255,255,.14);
+        border: 1px solid rgba(255, 255, 255, .15);
+        justify-content: center;
+      }
+      .nav a:hover{background: rgba(255, 255, 255, .24);}
+
+        :root:has(#about:target)    .nav a[href="#about"],
+        :root:has(#skills:target)    .nav a[href="#skills"],
+        :root:has(#experience:target) .nav a[href="#experience"],
+        :root:has(#projects:target)  .nav a[href="#projects"],
+        :root:has(#education:target) .nav a[href="#education"]{
+        outline: 2px solid rgba(255, 255, 255, .75);
+        outline-offset: 2px;
+    }
+
+       :root:not(:has(:target)) .nav a[href ="#about"]{
+           outline: 2px solid rgba(255, 255, 255, .5);
+           outline-offset: 2px;
+    }
+
+    .social{display: flex;gap: 12px;flex-wrap: wrap;font-size: 14px;}
+    .social a{color: #cffafe;}
+
+    .content{padding: var(--space-6);display: grid;gap: var(--space-6);}
+    @media (max-width: 640px){.content{padding: var(--space-4);}}
+
+    .section{
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        padding: var(--space-5);
+    }
+
+    .section h2{
+        margin: 0 0 12px;
+        font-size: calc(22px,3.5vw,28px);
+        position: relative;
+    }
+    .section h2::after{
+        content: "";position: absolute;left: 0;bottom: -6px;width: 15px;height: 3px;
+        background: linear-gradient(90deg, var(--accent-a) ,var(--accent-b));
+        transform-origin: left; transform: scaleX(1);
+        transition: transform  .6s ease;
+    }
+
+
+    .section:target h2::after{transform: scaleX(5);}
+    
+
+    .chips{display: flex;flex-wrap: wrap;gap: 8px;}
+    .chip{
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        padding: 6px 10px;
+        background:  color-mix(in srgb, var(--card) 85%, #fff0 15%);;
+    }
+
+    .timeline{border-left: 3px solid var(--line);padding-left: var(--space-5);display: grid;gap: 18px;}
+    .tl-item{position: relative;}
+    .tl-item::before{
+        content: "";position:absolute;left: -28px;top: 4px;width: 14px;height: 14px;border-radius: 50%;
+        background: linear-gradient(90deg, var(--accent-a), var(--accent-b));
+        box-shadow: 0 0 0 4px color-mix(in srgb,var(--card) 60%, #fff0 40%);
+    }
+    .tl-role{font-weight: 700;}
+    .tl-meta{color: var(--muted);font-size: 14px;}
+    .projects {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: var(--space-4);
+      }
+      @media (max-width: 1000px) { .projects { grid-template-columns: repeat(2, 1fr);}}
+      @media (max-width: 620px) {
+        .projects {grid-template-columns: 1fr;}}
+
+      .proj{
+      background: var(--card); border:1px solid var(--line);
+      border-radius: 14px; padding: 16px;
+      transition: transform .2s ease, box-shadow .2s ease;
+      will-change: transform;
+    }
+    .proj:hover{
+       transform: perspective(600px) rotateX(2deg) rotateY(-20deg) translateY(20px);
+       box-shadow: 0 14px 30px rgba(2,6,23,0.12)
+    }
+    .proj h3{ margin:0 0 6px; font-size:16px; text-transform:uppercase; letter-spacing:.3px; color:var(--muted) }
+
+      .muted{ color: var(--muted) }
+      .lead{ font-size: 18px; color: var(--muted); margin-top:4px }
+
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+        .proj {
+          transition: none;
+        }
+      }
+     
+      @media print{
+      .cover{ color:#000; background: none; border-right: 0 }
+      a{ color:#000; text-decoration:none }
+      .proj:hover{ transform:none; box-shadow:none }
+      .section{ box-shadow:none }
+    }
+
+    </style>
+</head>
+<body>
+  <main class="wrap">
+    
+    <aside class="cover" aria-label="cover">
+
+    <div class="hero-inner">
+      <div class="avatar">
+        <img src="Images/MyImage.png" alt="My Name portrait" loading="lazy" />
+      </div>  
+      <div class="title">
+        <h1>Randa Mohammed</h1>
+        <p class="muted">
+          Front-End Developer • UI Engineer • Design Systems
+        </p>
+      </div>
+    </div>
+
+     <nav class="nav" aria-label="Sections navigation">
+       <a href="#about">About</a>
+       <a href="#skills">Skills</a>
+       <a href="#experience">Experience</a>
+       <a href="#projects">Projects</a>
+       <a href="#education">Education</a>
+     </nav>
+
+     <div class="social" aria-label="Quick links">
+       <a href="mailto:randamuhammad79@gmail.com">randamuhammad79@gmail.com</a>
+        <a href="https://github.com/randamohammed" target="_blank" rel="noopener">github Profile</a>
+        <a href="https://www.linkedin.com/in/randa-mohammed-shrifa" target="_blank" rel="noopener">LinkedIn</a>
+     </div>
+    </aside>
+
+    <section class="content" aria-label="Main content">
+      <section id="about" class="section" aria-labelledby="about-title">
+        <h2 id="about-title">About</h2>
+        <p  class="lead">Detail-orientedSoftware Developer with hands-on experience in designing, building, and deploying full-scale
+        desktop applications and Windows services using C# .NET, data structures, and SQL. Proven ability to write
+        clean, object-oriented code with a passion for solving complex problems. Self-motivated and quick learner
+        with strong ability for self-directed learning. Seeking an opportunity to contribute to a collaborative team and
+        apply my technical skills to real-world challenges.</p>
+     
+        <div class="chips" style="margin-top: 10px;">
+         <span class="chip">Egypt, Cairo</span>   
+         <span class="chip">Arabic (Native)</span>
+         <span class="chip">English (Beginner)</span>  
+        </div>
+      </section>
+
+      <section id="skills" class="section" aria-labelledby="skills-title">
+        <h2 id="skills-title">Skills</h2>
+        <p class="muted">Core strengths and tools I use daily.</p>
+        <div class="chips" style="margin-top: 10px;">
+          <span class="chip">semantic HTMl</span>
+          <span class="chip">Modern CSS</span>
+          <span class="chip">Accessibility (a11y)</span>
+          <span class="chip">Chrome DevTools</span>
+          <span class="chip">VS.</span>
+          <span class="chip">MSSQl</span>
+        </div>
+       </section>
+
+      <section id="experience" class="section" aria-labelledby="exp-title">
+        <h2 id="exp-title">Experience</h2>
+        <div class="timeline">
+          <div class="tl-item">
+            <div class="tl-role">Jounier Front-End Developer</div>
+            <div class="tl-meta">Salf Learning Co • 2025—Present</div>
+            <ul  class="muted">
+             <li>
+                Designed and implemented responsive and user-friendly web
+                interfaces using HTML5, CSS3..
+              </li>
+              <li>
+                Applied CSS Grid and Flexbox layouts to create flexible and
+                adaptive designs across devices.
+              </li>
+            </ul>
+            </div>
+
+            <div class="tl-item">
+            <div class="tl-role">Jounier Front-End Developer</div>
+            <div class="tl-meta">Salf Learning Co • 2025—Present</div>
+            <ul class="muted">
+             <li>
+                Designed and implemented responsive and user-friendly web
+                interfaces using HTML5, CSS3..
+              </li>
+              <li>
+                Applied CSS Grid and Flexbox layouts to create flexible and
+                adaptive designs across devices.
+              </li>
+            </ul>
+            </div>
+        </div>
+      </section>
+
+        <section id="projects" class="section" aria-labelledby="proj-title">
+          <h2 class="proj-title">Selected Projects</h2>
+
+          <div class="projects">
+            <a class="proj"href="https://github.com/randamohammed/DVLD_Project-"aria-label="DVLD Project">
+              <h3>DVLD Project</h3>
+              <p class="muted">
+                comprehensive desktop application for managing billing and
+                point-of-sale operations collaboratively to support small
+                businesses by C#, .NET Framework, SQL Server.
+              </p>
+            </a>
+
+            <a class="proj" href="https://github.com/randamohammed/Web-Fundamentals-Practice"aria-label="Web Fundamentals Practice">
+              <h3>DVLD Project</h3>
+              <p class="muted">Training on mastering HTML and CSS concepts</p>
+            </a>
+
+            <a class="proj" href="https://github.com/randamohammed/Automated-Database-Backup-Service" aria-label="Automated Database Backup Service">
+              <h3>Automated Database Backup Service</h3>
+              <p class="muted">
+                performs scheduled backups of local or network databases to
+                ensure data safety and reliability.
+              </p>
+            </a>
+            
+          </div>
+      </section>
+
+      <section id="education" class="section">
+        <article class="card" aria-labelledby="edu-title">
+          <h2 id="edu-title">Education</h2>
+          <p>
+            <strong>BackEnd Developer</strong><br />
+            Online Learining • 2023—2025
+          </p>
+          <ul class="muted">
+            <li>Graduated with Honors</li>
+            <li>Key courses: Data Structures, Databases</li>
+          </ul>
+        </article>
+      </section>
+
+    </section>
+  </main>
+</body>
+</html>

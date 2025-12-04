@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Elegant CV – Scroll-Snap + Donut Skills (No JS)</title>
+    <style>
+      :root {
+        --bg: #f6f8fb;
+        --ink: #0f172a;
+        --muted: #64748b;
+        --card: #ffffff;
+        --line: #e5e7f0;
+        --accentA: #7c3aed;
+        --accentB: #14b8a6;
+
+        --radius: 18px;
+        --shadow: 0 12px 28px rgba(2, 6, 23, 0.08);
+
+        --space-1: 6px;
+        --space-2: 10px;
+        --space-3: 14px;
+        --space-4: 20px;
+        --space-5: 28px;
+        --space-6: 40px;
+
+        --maxw: 1100px;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg: #0b1220;
+          --ink: #e5e7eb;
+          --muted: #9aa3b2;
+          --card: #0f172a;
+          --line: #1f2a44;
+          --shadow: none;
+        }
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        margin: 0;
+        font: 16px/1.6 system-ui, -apple-system, Segoe UI, Roboto, Arial,
+          sans-serif;
+        color: var(--ink);
+        background: var(--bg);
+      }
+      img {
+        max-width: 100%;
+        display: block;
+      }
+      a {
+        color: color-mix(in srgb, var(--accentA) 70%, var(--accentB) 30%);
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+
+      .muted {
+        color: var(--muted);
+      }
+      .clean {
+        margin: 10 0 0 18px;
+      }
+
+      .hero {
+        position: relative;
+        background: linear-gradient(
+            135deg,
+            color-mix(in srgb, var(--accentA) 12%, #0000),
+            color-mix(in srgb, var(--accentB) 12%, #0000)
+          ),
+          var(--card);
+        border-bottom: 1px solid var(--line);
+      }
+      .hero-inner {
+        max-width: var(--maxw);
+        margin: 0 auto;
+        padding: var(--space-5) var(--space-4);
+        display: grid;
+        grid-template-columns: 120px 1fr;
+        gap: var(--space-4);
+        align-items: center;
+      }
+      @media (max-width: 720px) {
+        .hero-inner {
+          grid-template-columns: 1fr;
+          text-align: center;
+        }
+      }
+
+      .avatar {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        overflow: hidden;
+        position: relative;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+      }
+
+      .avatar::after {
+        content: "";
+        position: absolute;
+        inset: -4px;
+        border-radius: inherit;
+        background: conic-gradient(
+          from 180deg,
+          var(--accentA),
+          var(--accentB),
+          var(--accentA)
+        );
+        -webkit-mask: radial-gradient(
+          circle at center,
+          transparent 20px,
+          #000 59px
+        );
+        mask: radial-gradient(circle at center, transparent 20px, #000 59px);
+      }
+      .avatar img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+        border-radius: 50%;
+      }
+      .title h1 {
+        margin: 0;
+        font-size: clamp(30px, 6vw, 44px);
+        line-height: 1.1;
+      }
+      .title p {
+        margin: 6px 0 0;
+        font-size: 18px;
+      }
+
+      .hero-nav {
+        margin-top: 10px;
+        display: none;
+        gap: 14px;
+      }
+
+      @media (max-width: 1200px) {
+        .hero-nav {
+          display: flex;
+          gap: 14px;
+          justify-content: center;
+          flex-wrap: wrap;
+        }
+      }
+      .pill {
+        display: inline-block;
+        padding: 6px 12px;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        background: var(--bg);
+      }
+      .dotnav {
+        position: fixed;
+        transform: translateY(-50px);
+        top: 50px;
+        left: 20px;
+        display: grid;
+        gap: 10px;
+      }
+      @media (max-width: 1200px) {
+        .dotnav {
+          display: none;
+        }
+      }
+
+      .dotnav a {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: color-mix(in srgb, var(--muted) 50%, #0000);
+        border: 1px solid var(--line);
+        display: block;
+      }
+
+      #about:target ~ .dotnav a[href="#about"],
+      #skills:target ~ .dotnav a[href="#skills"],
+      #experience:target ~ .dotnav a[href="#experience"],
+      #projects:target ~ .dotnav a[href="#projects"],
+      #education:target ~ .dotnav a[href="#education"] {
+        background: linear-gradient(90deg, var(--accentA), var(--accentB));
+        outline: 2px solid
+          color-mix(in srgb, var(--accentA) 40%, var(--accentB) 60%);
+        outline-offset: 2px;
+      }
+
+      .snap {
+        scroll-snap-type: y proximity;
+        overflow-y: auto;
+        max-height: calc(100svh - 170px);
+
+        background: radial-gradient(
+            900px 400px at 110% -50%,
+            color-mix(in srgb, var(--accentA) 8%, #0000),
+            transparent
+          ),
+          radial-gradient(
+            800px 400px at -10% 120%,
+            color-mix(in srgb, var(--accentB) 8%, #0000),
+            transparent
+          );
+      }
+
+      .snap section {
+        scroll-snap-align: start;
+      }
+
+      .section {
+        max-width: var(--maxw);
+        margin: 0 auto;
+        padding: var(--space-6) var(--space-4);
+      }
+      .card {
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        padding: var(--space-5);
+      }
+
+      .section h2 {
+        margin: 0 0 12px;
+        font-size: clamp(22px, 3.5vw, 30px);
+      }
+      .section .lead {
+        font-size: 18px;
+        color: var(--muted);
+        margin: 6px 0 0;
+      }
+
+      .skills {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        justify-items: center;
+        gap: var(--space-4);
+      }
+      @media (max-width: 900px) {
+        .skills {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+      @media (max-width: 520px) {
+        .skills {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .donut {
+        --size: 120px;
+        --track: #e5e7f0;
+        --val: 75;
+        width: var(--size);
+        aspect-ratio: 1 / 1;
+        border-radius: 50%;
+        background: conic-gradient(
+          color-mix(in srgb, var(--accentA) 60%, var(--accentB) 40%)
+            calc(var(--val) * 1%),
+          var(--track) 0
+        );
+
+        display: grid;
+        place-items: center;
+        margin-inline: auto;
+        position: relative;
+        justify-items: center;
+      }
+
+      .donut::after {
+        content: "";
+        width: calc(var(--size) - 24px);
+        aspect-ratio: 1/1;
+        border-radius: 50%;
+        background: var(--card);
+        border: 1px solid var(--line);
+      }
+
+      .donut span {
+        position: absolute;
+        font-weight: 700;
+      }
+
+      details {
+        background: var(--card);
+        border: 1px solid var(--line);
+        padding: 14px 16px;
+        box-shadow: var(--shadow);
+        border-radius: var(--radius);
+      }
+
+      details + details {
+        margin-top: 12px;
+      }
+      summary {
+        cursor: pointer;
+        list-style: none;
+        font-weight: 700;
+      }
+      details[open] {
+        outline: 2px solid
+          color-mix(in srgb, var(--accentA) 30%, var(--accentB) 70%);
+        outline-offset: 2px;
+      }
+      .when {
+        color: var(--muted);
+        font-size: 14px;
+        margin-left: 8px;
+        font-weight: 500;
+      }
+
+      .projects {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: var(--space-4);
+      }
+      @media (max-width: 1000px) {
+        .projects {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+      @media (max-width: 620px) {
+        .projects {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .proj {
+        position: relative;
+        padding: 18px;
+        border-radius: 16px;
+        border: 1px solid var(--line);
+
+        background: linear-gradient(
+          to bottom right,
+          color-mix(in srgb, var(--card) 85%, #fff0),
+          color-mix(in srgb, var(--card) 92%, #fff0)
+        );
+        backdrop-filter: saturate(1.1) blur(6px);
+        box-shadow: var(--shadow);
+        transition: transform 0.2s ease, box-shadow 0.2s ease; /* smooth lift */
+      }
+      .proj:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 16px 30px rgba(2, 6, 23, 0.12);
+      }
+      .proj h3 {
+        margin: 0 0 6px;
+        font-size: 16px;
+        text-transform: uppercase;
+        letter-spacing: 0.3px;
+        color: var(--muted);
+      }
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+        .proj,
+        .donut {
+          transition: none;
+        }
+      }
+      @media print {
+        .dotnav {
+          display: none;
+        }
+
+        .snap {
+          overflow: visible;
+          box-shadow: none;
+        }
+        a {
+          color: #000;
+          text-decoration: none;
+        }
+
+        .card {
+          box-shadow: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="hero" aria-label="Intro">
+      <div class="hero-inner">
+        <div class="avatar">
+          <img src="Images/MyImage.png" alt="My Name portrait" loading="lazy" />
+        </div>
+
+        <div class="title">
+          <h1>Randa Mohammed</h1>
+          <p class="muted">
+            Front-End Developer • UI Engineer • Design Systems
+          </p>
+
+          <nav class="hero-nav" aria-label="Sections">
+            <a class="pill" href="#about">About</a>
+            <a class="pill" href="#skills">Skills</a>
+            <a class="pill" href="#experience">Experience</a>
+            <a class="pill" href="#projects">Projects</a>
+            <a class="pill" href="#education">Education</a>
+          </nav>
+        </div>
+      </div>
+    </header>
+
+    <main class="snap" aria-label="Scrollable resume">
+      <section id="about" class="section">
+        <article class="card" aria-labelledby="about-title">
+          <h2 id="about-title">About</h2>
+          <p>
+            Impact-driven builder of fast, accessible UIs. I care about design
+            tokens, clean semantics, and performance budgets.
+          </p>
+          <ul class="clean">
+            <li><strong>Location:</strong> Egpyt, Cairo</li>
+            <li>
+              <strong>Languages:</strong> Arabic (Native), English (Beggener)
+            </li>
+            <li>
+              <strong>Contact:</strong> randamuhammad79@gmail.com •
+              github.com/randamohammed
+            </li>
+          </ul>
+        </article>
+      </section>
+
+      <section id="skills" class="section">
+        <article class="card" aria-labelledby="skills-title">
+          <h2 id="skills-title">Skills</h2>
+          <p class="muted">
+            CSS donuts below are pure CSS (<code>conic-gradient</code>). Set
+            values with <code>--val</code>.
+          </p>
+
+          <div class="skills" role="list">
+            <div role="listitem" class="skill">
+              <div class="donut" style="--val: 92"><span>92</span></div>
+              <p>
+                <strong>Semantic HTML</strong><br /><span class="muted"
+                  >Landmarks, structure</span
+                >
+              </p>
+            </div>
+
+            <div role="listitem" class="skill">
+              <div class="donut" style="--val: 88"><span>88</span></div>
+              <p>
+                <strong>Modern HTML</strong><br /><span class="muted"
+                  >Grid, Flex, custom props</span
+                >
+              </p>
+            </div>
+
+            <div role="listitem" class="skill">
+              <div class="donut" style="--val: 80"><span>80</span></div>
+              <p>
+                <strong>Accessibility</strong><br /><span class="muted"
+                  >keyboard, color</span
+                >
+              </p>
+            </div>
+
+            <div role="listitem" class="skill">
+              <div class="donut" style="--val: 92"><span>92</span></div>
+              <p>
+                <strong>Tooling</strong><br /><span class="muted"
+                  >Git, GitHub,Chrome</span
+                >
+              </p>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <section id="experience" class="section">
+        <article class="card" aria-labelledby="exp-title">
+          <h2 id="exp-title">Experience</h2>
+
+          <details>
+            <summary>
+              Jounier Front-End Developer
+              <span class="when">• Tech Co • 2025—Present</span>
+            </summary>
+            <ul class="clean muted">
+              <li>
+                Designed and implemented responsive and user-friendly web
+                interfaces using HTML5, CSS3..
+              </li>
+              <li>
+                Applied CSS Grid and Flexbox layouts to create flexible and
+                adaptive designs across devices.
+              </li>
+            </ul>
+          </details>
+
+          <details>
+            <summary>
+              Junior API Developer <span class="when">• Tech Co • 2025</span>
+            </summary>
+            <ul class="clean muted">
+              <li>
+                Implemented authentication using JWT and role-based access
+                control.
+              </li>
+              <li>Documented and tested endpoints using Swagger.</li>
+            </ul>
+          </details>
+        </article>
+      </section>
+
+      <section id="projects" class="section">
+        <article class="card" aria-labelledby="proj-title">
+          <h2 class="proj-title">Selected Projects</h2>
+
+          <div class="projects">
+            <a
+              class="proj"
+              href="https://github.com/randamohammed/DVLD_Project-"
+              aria-label="DVLD Project"
+            >
+              <h3>DVLD Project</h3>
+              <p>
+                comprehensive desktop application for managing billing and
+                point-of-sale operations collaboratively to support small
+                businesses by C#, .NET Framework, SQL Server.
+              </p>
+            </a>
+
+            <a
+              class="proj"
+              href="https://github.com/randamohammed/Web-Fundamentals-Practice"
+              aria-label="Web Fundamentals Practice"
+            >
+              <h3>DVLD Project</h3>
+              <p>Training on mastering HTML and CSS concepts</p>
+            </a>
+
+            <a
+              class="proj"
+              href="https://github.com/randamohammed/Automated-Database-Backup-Service"
+              aria-label="Automated Database Backup Service"
+            >
+              <h3>Automated Database Backup Service</h3>
+              <p>
+                performs scheduled backups of local or network databases to
+                ensure data safety and reliability.
+              </p>
+            </a>
+          </div>
+        </article>
+      </section>
+
+      <section id="education" class="section">
+        <article class="card" aria-labelledby="edu-title">
+          <h2 id="edu-title">Education</h2>
+          <p>
+            <strong>BackEnd Developer</strong><br />
+            Online Learining • 2023—2025
+          </p>
+          <ul class="clean muted">
+            <li>Graduated with Honors</li>
+            <li>Key courses: Data Structures, Databases</li>
+          </ul>
+        </article>
+      </section>
+
+      <nav class="dotnav" aria-label="Quick section nav">
+        <a href="#about" title="About"></a>
+        <a href="#skills" title="Skills"></a>
+        <a href="#experience" title="Experience"></a>
+        <a href="#projects" title="Projects"></a>
+        <a href="#education" title="Education"></a>
+      </nav>
+    </main>
+  </body>
+</html>
