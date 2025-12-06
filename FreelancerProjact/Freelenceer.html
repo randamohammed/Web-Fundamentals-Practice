@@ -83,30 +83,26 @@
             margin-top: -30px;
             font-size: 17px;
          }
-        button{
-          
-            width: 350px;
-            height: 40px;
-            margin: 25px;
-            text-align: center;
-            cursor: pointer;
-            display: block;
-            line-height: 1.3px;
-            border: #c4c2c2 solid 1px;
-            color: rgb(7, 6, 6);
-           
-         
-         }
-          .Social-button {
-        justify-content: center;
-        align-items: center;
-          
-         }
-         .Social-button img{
-          width: 28px;
-          height: 28px;
-          
-         }
+        button {
+    width: 350px;
+    height: 40px;
+    margin: 25px;
+    text-align: center;
+    cursor: pointer;
+    display: flex;                 /* ← مهم */
+    justify-content: center;       /* وسط أفقياً */
+    align-items: center;           /* وسط عمودياً */
+    gap: 10px;                     /* مسافة بين الصورة والنص */
+    border: #c4c2c2 solid 1px;
+    color: rgb(7, 6, 6);
+}
+
+.Social-button img {
+    width: 28px;
+    height: 28px;
+    display: block;
+}
+
 
       .log-in{
       background-color: rgb(55, 124, 214);
