@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Short Stories Showcase</title>
+
+    <style>
+         :root {
+      --bg: #fdfaf6;              
+      --text: #2b2b2b;           
+      --accent: #d97706;          
+      --card-bg: #ffffff;          
+      --radius: 14px;              
+      --shadow: 0 10px 25px rgba(0, 0, 0, 0.08); 
+      --maxw: 1000px;     
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #1a1a1a;              
+        --text: #f5f5f5;            
+        --accent: #fbbf24;          
+        --card-bg: #262626;         
+      }
+    }
+
+    body{
+        font-family:'Georgia', serif;
+        background: var(--bg);
+        color: var(--text);
+        margin: 0;
+        line-height: 1/6;
+    }
+    header{
+        padding: 2rem 1rem;
+        background: var(--accent);
+        color: white;
+        text-align: center;
+    }
+    header h1{
+        margin: 0;
+        font-size: 2.5rem;
+    }
+    nav a{
+        color: white;
+        margin: 0 0 .5rem;
+        text-decoration: underline;
+    }
+    main{
+        max-width: var(--maxw);
+        margin: auto;
+        padding: 2rem 1rem;
+        display: grid;
+        gap: 2rem;
+    }
+
+    .story-card
+    {
+     background: var(--card-bg);
+     border-radius: var(--radius);
+     box-shadow: var(--shadow);
+     overflow: hidden;
+     transition:  transform 0.3s ease, box-shadow 0.3s ease;
+     text-align: center;
+    }
+    .story-card:hover{
+        transform: translateY(-8px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+    }
+
+    .story-thumb{
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+        display: block;
+    }
+    .story-content{
+        padding: 1.5rem;
+    }
+    .story-title{
+        font-size: 1.5rem;
+        margin-top: 0.75rem;
+        margin-bottom: 0.5rem;
+        color: var(--accent);
+    }
+    .story-excerpt {
+      margin-bottom: 1rem;
+    }
+
+    .read-more {
+     color: var(--accent);
+     font-weight: bold;
+     text-decoration: none;
+     border-bottom: 2px solid transparent;
+     transition: border-color 0.3s;
+    }
+
+    .read-more:hover{
+        border-color: var(--accent);
+    }
+    dialog {
+        width: 90%;
+        max-width: 700px;
+        border: none;
+        background: var(--card-bg);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        color: var(--text);
+        padding: 2rem;
+        text-align: left;
+        position: relative;
+    }
+    dialog img{
+        width:  400px;
+        max-width: 100%;
+        height: auto;
+        display: block;
+        margin: 0 auto 1rem;
+        border-radius: var(--radius);
+    }
+
+    dialog h2{
+        margin: 0.25rem 0 0.75rem;
+        line-height: 1.3;
+    }
+    dialog p {
+      margin: 0 0 1rem;    
+    }
+
+    .close-btn{
+        background: none;
+        border: none;
+        font-size: 1.2rem;
+        color: var(--accent);
+        cursor: pointer;
+        position: absolute;
+        right: 1rem;
+        top: 1rem;
+    }
+    @media print{
+        @page{margin: 16mm;}
+        *{--webkit-print-color-adjust: exact; print-color-adjust: exact; }
+        html,body{height: auto !important; overflow: visible !important;}
+        body:has(dialog[open]) > :not(dialog[open]){display: none !important;}
+        :not(dialog[open]){display: none !important;}
+
+         dialog[open] {
+         display: block !important;
+         position: static !important;
+         inset: auto !important;
+         transform: none !important;
+         width: auto !important;
+         max-width: none !important;
+         height: auto  !important;
+         overflow: visible   !important;
+         max-height: auto !important;
+         box-shadow: none !important;
+         background: var(--card-bg) !important;
+        
+        }
+         dialog[open]::backdrop { display: none !important; }
+
+        .close-btn,
+    .read-more,
+    nav { display: none !important; }
+
+    /* Nicer pagination */
+    h1, h2, img { break-inside: avoid; page-break-inside: avoid; }
+    p, li { orphans: 3; widows: 3; }
+
+    /* Avoid image cropping in print */
+    .story-thumb { height: auto !important; }
+
+    /* Hide printed scrollbars (where applicable) */
+    * { scrollbar-width: none !important; }
+    *::-webkit-scrollbar { display: none !important; }
+    }
+    </style>
+</head>
+<body>
+  <header>
+    <h1>Short Stories Showcase</h1>
+    <p>Immerse yourself in bite-sized narratives</p>
+
+    <nav>
+      <a href="#" onclick="document.getElementById('story1').showModal(); return false">The Last Train</a>
+      <a href="#" onclick="document.getElementById('story2').showModal(); return false">The Midnight Library</a>
+      <a href="#" onclick="document.getElementById('story3').showModal(); return false">Beneath The Old Oak</a>
+    </nav>
+  </header>
+
+  <main>
+
+  <article class="story-card">
+    <img src="images/TheLastTrain.png" alt="The Last Train" class="story-thumb">
+    <div class="story-content">
+      <h2 class="story-title">The Last Train</h2>
+      <p class="story-excerpt">
+         It was nearly midnight when Sarah stepped onto the empty platform, unaware that this
+          journey would change her life forever...
+      </p>
+      <a href="#" class="read-more" onclick="document.getElementById('story1').showModal(); return false">Read More</a>
+    </div>
+  </article>
+
+   <article class="story-card">
+    <img src="images/TheMidnightLibrary.png" alt="The Midnight Library" class="story-thumb">
+    <div class="story-content">
+      <h2 class="story-title">The Last Train</h2>
+      <p class="story-excerpt">
+         It was nearly midnight when Sarah stepped onto the empty platform, unaware that this
+          journey would change her life forever...
+      </p>
+      <a href="#" class="read-more" onclick="document.getElementById('story2').showModal(); return false">Read More</a>
+    </div>
+  </article>
+
+   <article class="story-card">
+    <img src="images/BeneathTheOldOak.png" alt="Beneath The Old Oak" class="story-thumb">
+    <div class="story-content">
+      <h2 class="story-title">The Last Train</h2>
+      <p class="story-excerpt">
+         It was nearly midnight when Sarah stepped onto the empty platform, unaware that this
+          journey would change her life forever...
+      </p>
+      <a href="#" class="read-more" onclick="document.getElementById('story3').showModal(); return false">Read More</a>
+    </div>
+  </article>
+
+  
+  <dialog id="story1" aria-labelledby="story1-title">
+    <button class="close-btn" onclick="this.parentElement.close()" aria-label="Close Story">✕</button>
+    <img src="images/TheLastTrain.png" alt="The last Train">
+    <h2 id ="story1-title">The Last Train</h2>
+    <p><em>Just before midnight, Sarah stepped onto the wind-polished platform of a town that looked like a memory—paint
+        peeling, clocks stubborn, and every bench holding the shape of someone who had already left.</em></p>
+    <p>The conductor stood under the yellow cone of a lamp, hands folded behind his back like a patient question. “Last
+      train,” he said, not unkindly. Steam stitched the cold between them. Sarah nodded and tightened her grip on a
+      small canvas bag that carried less than she owned and more than she could explain.</p>
+    <p>Her phone had died an hour earlier, somewhere between the final argument and the dark road that led to the
+      station. There would be messages by now, apologies shaped like command. She could almost hear them in the hollow
+      of the night. She looked down the track—two parallel convictions vanishing into a possibility.</p>
+    <p>“Where to?” the conductor asked. His badge said M. Ilyas. His eyes said he had watched a thousand departures and
+      never learned to be careless with them.</p>
+    <p>“I don’t know yet,” Sarah said. The answer surprised her by being true.</p>
+    <p>Ilyas considered this as though consulting a timetable in his head. “We stop at Brookline, Ferris, and Harbor.
+      Harbor is the end.”</p>
+    <p>“What’s at Harbor?”</p>
+    <p>“An ocean,” he said. “And whatever lives beside one.”</p>
+    <p>The train exhaled. Sarah bought a ticket whose destination felt like a hand she hadn’t shaken. In the carriage,
+      the lights hummed softly, and the upholstery smelled of oranges and old rain. Opposite her, a boy slept with a
+      book tented over his chest. A woman across the aisle unraveled a scarf of impossible blue.</p>
+    <p>At Brookline, a man climbed aboard with a box that clicked faintly. “Beetles,” he told Ilyas, delighted by the
+      way the word fit in his mouth. “A museum loan.” He sat beside Sarah and, sensing her worry, started speaking of
+      carapaces and the patience of tiny lives. When he fell silent, the clicking went on, a metronome for courage.</p>
+    <p>Ferris arrived like a held breath. Sarah nearly stood—habit tugging at her sleeve. Ferris was the kind of town
+      that knew her last name and the shape of her mother’s disappointment. The platform lamps wrote soft circles on the
+      snow. No one got off. No one got on. The doors closed with the mercy of a gentle refusal.</p>
+    <p>“You passed it,” the beetle man said, not looking at her. “Sometimes that’s the only way forward.”</p>
+    <p>Past midnight, sleep took passengers one by one. Sarah watched herself in the window: a ghost trying on a body.
+      She remembered learning to swim as a child, the way the ocean lifted her when she finally stopped fighting for the
+      bottom. Harbor was still an hour away when she made her decision. It wasn’t a plan; it was the absence of a
+      promise she no longer owed.</p>
+    <p>Harbor opened like a letter. The station smelled of salt and coffee. Vendors poured dawn into paper cups. The
+      ocean didn’t roar; it breathed. Sarah stepped outside. Wind untied her hair. Somewhere gulls negotiated a truce.
+      She found a bench that had not yet learned anyone’s shape and sat until the sky considered blue.</p>
+    <p>Ilyas appeared with two cups. “Your stop,” he said, offering one. “Or your start.” He nodded toward the pier
+      where a hand-painted sign advertised Rooms by the Week.</p>
+    <p>“Thank you,” Sarah said, and surprised herself again by meaning it for more than the coffee. She tore the ticket
+      in half. The pieces didn’t float like in movies; they fell like small decisions.</p>
+    <p>By noon she had a room with a window the size of a choice. That night, the ocean kept time on the sill, and Sarah
+      slept without the train inside her. In the morning she walked to the water and let it take the argument she
+      couldn’t finish, the apology she didn’t owe, and the fear that her life would be a circle. The tide returned with
+      her name spelled wrong and she laughed, and the gulls looked personally offended.</p>
+    <p>Weeks later, on a bus that smelled of pine cleaner, Sarah saw the beetle man again. He held the now-silent box.
+      “They’re home,” he said. “Sometimes that’s the only way forward.”</p>
+    <p>“Sometimes,” Sarah agreed. Behind the glass, Harbor kept breathing. The last train had turned into the first
+      morning without a timetable, and for once, she was not late for her life.</p>
+  </dialog>
+
+  
+  <dialog id="story2" aria-labelledby="story2-title">
+    <button class="close-btn" onclick="this.parentElement.close()" aria-label="Close Story">✕</button>
+    <img src="images/TheMidnightLibrary.png" alt="The Midnight Library">
+    <h2 id ="story1-title">The Last Train</h2>
+    <p><em>The library appeared only between 12:00 and 12:15 AM, and only to people who felt lost.</em></p>
+   <p>Jamal stepped inside and found books floating gently above the shelves. One of them drifted toward him and opened
+     on its own—its pages blank at first, then slowly filling with sentences describing his own life.</p>
+  <p>But then the story continued… into a future he didn’t recognize.</p>
+  <p>“You choose the ending,” the librarian said, her voice calm as moonlight. “Libraries don’t predict. They remind.”</p>
+  <p>When Jamal walked out at 12:16, the library vanished behind him. But the final sentence from the book stayed in his
+     mind: *The next chapter waits for courage.*</p>
+  </dialog>
+
+
+  <dialog id="story3" aria-labelledby="story2-title">
+    <button class="close-btn" onclick="this.parentElement.close()" aria-label="Close story">✕</button>
+    <img src="images/BeneathTheOldOak.png" alt="Beneath the Old Oak full">
+    <h2 id="story2-title">Beneath the Old Oak</h2>
+    <p><em>Every summer, Daniel measured time by the shade of the oak. By noon the light sat on the ruined porch like a
+        sleeping cat, and the letters he waited for never arrived.</em></p>
+    <p>His grandmother had told him the tree was older than the house and kinder than most people. It held the hill
+      together, she said, and sometimes it held people, too. When she died, the house learned how to echo, and Daniel
+      learned that a mailbox can be loyal to emptiness.</p>
+    <p>He kept writing anyway—small notes to a father who moved like weather, to a mother who loved him in present tense
+      and panic, to a girl who had left with the first thaw. He folded each page into the same envelope and addressed it
+      to a version of himself that lived on the other side of courage. He never mailed them. He hid them in a shoebox
+      under the bed, which is to say he planted them in a room and hoped for rain.</p>
+    <p>One afternoon, while the heat argued with the cicadas, he noticed a seam in the dirt where the roots rose like
+      old knuckles. The ground had been disturbed. He brought a trowel and a glass jar and the kind of patience that
+      belongs to people who talk to trees. A few inches down he hit metal—the lid of a biscuit tin, red once, now the
+      color of remembering.</p>
+    <p>Inside were letters, brittle as moth wings, tied with blue thread. The top one was addressed to <em>Whoever waits
+        here</em>. The handwriting was neat and stubborn. He read on the porch while the shade slowly crossed his knees.
+    </p>
+    <p>They were love letters, of a sort, written by a woman named Salma to a man who had left for a war and sent back
+      more silence than news. She dated each one and folded a pressed leaf inside, a record of seasons that kept the
+      time he couldn’t. The last letter said: <em>If you come back and I am gone, know that I decided to stay
+        anyway.</em></p>
+    <p>Daniel felt something unclench in the house. He made tea. He wrote back—not to Salma, who required no reply, and
+      not to the man, who had already chosen his distance, but to <em>Whoever waits here</em>. He wrote about the way
+      the light moves on the porch and how an oak can be a calendar if you’re patient. He wrote about the mailbox, which
+      was not the enemy after all, only a witness. He folded the letter around a leaf, tied it with thread stolen from
+      the hem of a memory, and placed it in the tin.</p>
+    <p>He put the tin back, deeper this time. He patted the earth as if tucking in a child. When he stood, the shade had
+      reached the steps. The mailbox waited at the end of the drive, exactly as faithful as before. Daniel walked to it
+      and opened the door. It was empty, which is another way of saying it was ready.</p>
+    <p>That evening, the wind came up from the river and said a few kind things to the leaves. Daniel sat beneath the
+      oak and read one of his old notes aloud. It sounded less like begging and more like weather—passing, necessary,
+      unashamed. He did not stop waiting; he changed what he was waiting for. Sometimes the letters come, he would tell
+      people later. Sometimes the tree answers instead. Both are good news.</p>
+  </dialog>
+
+
+</body>
+</html>
